@@ -1,46 +1,43 @@
-# Docs at robotpy.readthedocs.org
+"""
+Basically a wrapper for commands and subsystems.
+"""
 import wpilib
+from wpilib import command
+
+from subsystems.example_subsystem import ExampleSubsystem
+from commands.example_command import ExampleCommand
+from oi import OI
+
 
 class MyRobot(wpilib.IterativeRobot):
 
     def robotInit(self):
-        self.drive = wpilib.RobotDrive(0, 1, 2, 3)
-
-        self.leftStick = wpilib.Joystick(1)
-        self.middleStick = wpilib.Joystick(2)
-        self.rightStick = wpilib.Joystick(3)
+        """
+        This function is called upon program startup and
+        should be used for any initialization code.
+        """
+        # Create operator interface
+        self.oi = OI(self)
+        # Create subsystems
+        self.example_subsystem = ExampleSubsystem(self)
+        #Create the command used for the autonomous period
+        self.autonomous_command = ExampleCommand(self)
 
     def autonomousInit(self):
-        """This function is run once each time the robot enters autonomous mode."""
-        self.auto_loop_counter = 0
+        #Schedule the autonomous command
+        self.autonomous_command.start()
 
     def autonomousPeriodic(self):
         """This function is called periodically during autonomous."""
-
-        # Check if we've completed 100 loops (approximately 2 seconds)
-        if self.auto_loop_counter < 100:
-            self.robot_drive.drive(-0.5, 0) # Drive forwards at half speed
-            self.auto_loop_counter += 1
-        else:
-            self.robot_drive.drive(0, 0)    #Stop robot
+        command.Scheduler.getInstance().run()
 
     def teleopPeriodic(self):
+        """This function is called periodically during operator control."""
+        command.Scheduler.getInstance().run()
 
-         # Driving with left and middle sticks
-
-        '''
-
-        right trigger = ball intake (LEDs change color)
-        right top button = rev up wheels for shooting (press again to stop)
-        right top bottom button = shoot (flip ball up to cannon, stop by limit switch)
-
-        middle top button + bottom button = extend arm
-
-
-        ultrasonic sensor
-        camera with TrackerBox
-        '''
-
+    def testPeriodic(self):
+        """This function is called periodically during test mode."""
+        wpilib.LiveWindow.run()
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)

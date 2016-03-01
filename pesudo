@@ -1,0 +1,8 @@
+if (distance is not in range) {
+  followTarget()
+}
+else {
+  if (skew in range) {
+    shoot()
+  }
+}
