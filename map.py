@@ -1,7 +1,7 @@
 """
 Defines port numbers for motors and sensors.
 """
-class RobotMap:
+class Map(object):
     # Joysticks have suffix 'J'
     leftJ       = 0
     middleJ     = 1
@@ -17,6 +17,9 @@ class RobotMap:
     beltAxisM   = 5
     shootM      = 6
     flipM       = 7
-    armM        = 8
+    liftM       = 8
+
+    # Sensors
+    sonar       = 0
 
     pass
