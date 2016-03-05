@@ -2,44 +2,25 @@
 Main logic code
 """
 import wpilib
-import Map
+from components import Component
 
-class MyRobot(wpilib.IterativeRobot):
-
+class MyRobot(wpilib.SampleRobot):
     def robotInit(self):
-        # Mapping object stores port numbers for all connected motors, sensors, and joysticks. See map.py.
-        Mapping = Map()
+        self.C = Component() # Components inits all connected motors, sensors, and joysticks. See components.py.
 
-        # Init drivetrain
-        self.robotDrive = wpilib.RobotDrive(Mapping.frontLeftM, Mapping.backLeftM, Mapping.frontRightM, Mapping.backRightM)
-        self.robotDrive.setExpiration(0.1)
+    def operatorControl(self):
+        self.myRobet.setSafetyEnabled(True)
 
-        # Init other motors
-        self.beltM      = wpilib.Jaguar(Mapping.beltM)
-        self.beltAxisM  = wpilib.Talon(Mapping.beltAxisM)
-        # change to self.beltM = wpilib.Talon(Mapping.beltM) on comp bot
-        self.shootM     = wpilib.Talon(Mapping.shootM)
-        self.flipM      = wpilib.Jaguar(Mapping.flipM)
-        self.liftM      = wpilib.Jaguar(Mapping.liftM)
+        while self.isOperatorControl() and self.isEnabled():
+            self.C.driveTrain.drive(self.C.leftJ.getY(), self.C.leftJ.getX())
 
+            wpilib.Timer.delay(0.005) # wait for a motor update time
 
-        # Init joysticks
-        self.leftJ      = wpilib.Joystick(Mapping.leftJ)
-        self.middleJ    = wpilib.Joystick(Mapping.middleJ)
-        self.rightJ     = wpilib.Joystick(Mapping.rightJ)
-
-        # Init sensors
-        self.sonar      = wpilib.AnalogInput(Mapping.sonar)
-
-    def autonomousPeriodic(self):
+    def autonomous(self):
         """This function is called periodically during autonomous."""
         pass
 
-    def teleopPeriodic(self):
-        """This function is called periodically during operator control."""
-        pass
-
-    def testPeriodic(self):
+    def test(self):
         """This function is called periodically during test mode."""
 
 if __name__ == "__main__":
