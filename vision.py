@@ -1,18 +1,23 @@
 """
-Communicates with the Raspberry Pi to get tracking info about the target
+Communicates with the Raspberry Pi to get tracking info about the target. Usage:
+vision = Vision()
+print(vision.getData())  
 """
 import socket
 
 class Vision(object):
     def __init__(self):
         # open socket
-        self.sock = socket.socket()
-        self.sock.connect(("raspberrypi", 1182))
+        try:
+            self.sock = socket.socket()
+            self.sock.connect(("raspberrypi", 1182))
+        except:
+            return false
 
     def getData(self):
         # if socket has closed, except: will run
         try:
-            self.sock.send(b'my request\r\n')
+            self.sock.send(b'\r\n')
             data = self.sock.recv(256)
             data = data.decode("utf-8") # info comes back as a byte string
             return data
