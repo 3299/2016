@@ -9,10 +9,7 @@ class Map(object):
         self.middleJ     = 1
         self.rightJ      = 2
 
-        # Maps for buttons-to-actions have suffix 'BA'
-
-
-        # Motors have suffix 'M'
+        # Motors have suffix 'M'. All motors use PWM.
         self.frontLeftM  = 5
         self.frontRightM = 4
         self.backLeftM   = 3
@@ -24,7 +21,9 @@ class Map(object):
         self.flipM       = 9
         self.liftM       = 1
 
-        # Sensors
-        self.sonar       = 0
-        
+        # Sensors have suffix 'S'. Sonar and gyro use analog in, everything else uses the DIO.
+        self.sonarS      = 0
+        self.beltAxisTS  = 0
+        self.beltAxisBS  = 1
+
         pass

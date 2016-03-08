@@ -4,20 +4,28 @@ Main logic code
 import wpilib
 from components import Component
 from vision import Vision
+from limit import Limit
 
 class MyRobot(wpilib.SampleRobot):
     def robotInit(self):
         self.C = Component() # Components inits all connected motors, sensors, and joysticks. See components.py.
         self.vision = Vision()
+        self.beltLimit = Limit(self.C.irightJ.getButton(1), self.C.beltM, self.C.beltAxisBS.get(), self.C.beltAxisTS.get())
 
     def operatorControl(self):
         self.C.driveTrain.setSafetyEnabled(True)
 
         while self.isOperatorControl() and self.isEnabled():
-            self.C.driveTrain.tankDrive(self.C.leftJ, self.C.middleJ)
+            # Drive
+            self.C.driveTrain.tankDrive(self.C.ileftJ(), self.C.imiddleJ())
 
-            if (self.C.leftJ.getTrigger()):
-                print(self.vision.getData())
+            # When button 2 on right joystick is held down the belt runs
+            if (self.C.irightJ.getButton(2) == True):
+                self.beltM.set(1)
+            else:
+                self.beltM.set(0)
+
+            self.beltLimit.run()
 
             wpilib.Timer.delay(0.005) # wait for a motor update time
 

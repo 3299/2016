@@ -25,4 +25,13 @@ class Component(object):
         self.rightJ     = wpilib.Joystick(Mapping.rightJ)
 
         # Init sensors
-        self.sonar           = wpilib.AnalogInput(Mapping.sonar)
+        self.sonarS     = wpilib.AnalogInput(Mapping.sonarS)
+        self.beltAxisTS = wpilib.DigitalInput(Mapping.beltAxisTS)
+        self.beltAxisBS = wpilib.DigitalInput(Mapping.beltAxisBS)
+
+    def ileftJ(self):
+        return self.leftJ
+    def imiddleJ(self):
+        return self.middleJ
+    def irightJ(self):
+        return self.rightJ

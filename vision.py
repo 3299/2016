@@ -1,7 +1,7 @@
 """
 Communicates with the Raspberry Pi to get tracking info about the target. Usage:
 vision = Vision()
-print(vision.getData())  
+print(vision.getData())
 """
 import socket
 
@@ -12,7 +12,7 @@ class Vision(object):
             self.sock = socket.socket()
             self.sock.connect(("raspberrypi", 1182))
         except:
-            return false
+            return None
 
     def getData(self):
         # if socket has closed, except: will run
