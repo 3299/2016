@@ -1,3 +1,7 @@
+"""
+Inits wpilib objects
+"""
+
 import wpilib
 from map import Map
 

@@ -5,27 +5,27 @@ import wpilib
 from components import Component
 from vision import Vision
 from limit import Limit
+from triggerRun import triggerRun
 
 class MyRobot(wpilib.SampleRobot):
     def robotInit(self):
         self.C = Component() # Components inits all connected motors, sensors, and joysticks. See components.py.
         self.vision = Vision()
-        self.beltLimit = Limit(self.C.irightJ.getButton(1), self.C.beltM, self.C.beltAxisBS.get(), self.C.beltAxisTS.get())
+
+        # Defines triggers for motors
+        self.beltRun = triggerRun(self.C.irightJ().getRawButton(2), self.C.beltM)
+        self.beltAxisLimit = Limit(self.C.irightJ().getRawButton(3), self.C.beltAxisM, self.C.beltAxisBS.get(), self.C.beltAxisTS.get())
 
     def operatorControl(self):
-        self.C.driveTrain.setSafetyEnabled(True)
+        self.C.driveTrain.setSafetyEnabled(True) # keeps robot from going crazy if connection with DS is lost
 
         while self.isOperatorControl() and self.isEnabled():
             # Drive
             self.C.driveTrain.tankDrive(self.C.ileftJ(), self.C.imiddleJ())
 
-            # When button 2 on right joystick is held down the belt runs
-            if (self.C.irightJ.getButton(2) == True):
-                self.beltM.set(1)
-            else:
-                self.beltM.set(0)
-
-            self.beltLimit.run()
+            # All the triggers for these are defined in robotInit
+            self.beltRun.run()
+            self.beltAxisLimit.run()
 
             wpilib.Timer.delay(0.005) # wait for a motor update time
 

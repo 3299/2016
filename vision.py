@@ -3,6 +3,7 @@ Communicates with the Raspberry Pi to get tracking info about the target. Usage:
 vision = Vision()
 print(vision.getData())
 """
+
 import socket
 
 class Vision(object):
