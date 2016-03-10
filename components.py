@@ -32,3 +32,4 @@ class Component(object):
         self.sonarS     = wpilib.AnalogInput(Mapping.sonarS)
         self.beltAxisTS = wpilib.DigitalInput(Mapping.beltAxisTS)
         self.beltAxisBS = wpilib.DigitalInput(Mapping.beltAxisBS)
+        self.flipS      = wpilib.DigitalInput(Mapping.flipS)

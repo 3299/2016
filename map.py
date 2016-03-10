@@ -25,5 +25,6 @@ class Map(object):
         self.sonarS      = 0
         self.beltAxisTS  = 0
         self.beltAxisBS  = 1
+        self.flipS       = 2
 
         pass

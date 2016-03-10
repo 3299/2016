@@ -15,6 +15,7 @@ class MyRobot(wpilib.SampleRobot):
         # Defines triggers for motors
         self.beltRun = triggerRun(self.C.rightJ.getRawButton(2), self.C.beltM)
         self.beltAxisLimit = Limit(self.C.rightJ.getRawButton(3), self.C.beltAxisM, self.C.beltAxisBS.get(), self.C.beltAxisTS.get())
+        self.flipRun = Limit(self.C.rightJ.getRawButton(4), self.C.flipM, self.C.flipS.get(), self.C.flipS.get())
         self.shootRun = triggerRun(self.C.rightJ.getTrigger(), self.C.shootM)
 
     def operatorControl(self):
@@ -28,6 +29,7 @@ class MyRobot(wpilib.SampleRobot):
             # All the triggers for these are defined in robotInit
             self.beltRun.run()
             self.beltAxisLimit.run()
+            self.flipRun.run()
             self.shootRun.run()
 
             wpilib.Timer.delay(0.005) # wait for a motor update time
