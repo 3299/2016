@@ -2,7 +2,7 @@
 Turns motor on when trigger is true
 """
 
-class triggerRun(object):
+class trigger(object):
     # trigger is boolean, output is a motor controller
     def __init__(self, trigger, output):
         self.trigger = trigger

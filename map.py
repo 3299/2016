@@ -21,8 +21,9 @@ class Map(object):
         self.flipM       = 9
         self.liftM       = 1
 
-        # Sensors have suffix 'S'. Sonar and gyro use analog in, everything else uses the DIO.
-        self.sonarS      = 0
+        # Sensors have suffix 'S'. Gyro and sonar use analog in, everything else uses the DIO.
+        self.gyroS       = 0
+        self.sonarS      = 1
         self.beltAxisTS  = 0
         self.beltAxisBS  = 1
         self.flipS       = 2

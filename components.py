@@ -29,6 +29,7 @@ class Component(object):
         self.rightJ     = wpilib.Joystick(Mapping.rightJ)
 
         # Init sensors
+        self.gyroS      = wpilib.AnalogGyro(Mapping.gyroS)
         self.sonarS     = wpilib.AnalogInput(Mapping.sonarS)
         self.beltAxisTS = wpilib.DigitalInput(Mapping.beltAxisTS)
         self.beltAxisBS = wpilib.DigitalInput(Mapping.beltAxisBS)
