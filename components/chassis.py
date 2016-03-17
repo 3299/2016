@@ -1,8 +1,8 @@
 """
-Drive class. Can accept input from joysticks or values [-1, 1]. Uses the gyro for better steering.
+Drives. Can accept input from joysticks or values [-1, 1]. Uses the gyro for better steering.
 """
 
-class DriveTrain(object):
+class Chassis(object):
     def __init__(self, drive, gyro):
         self.drive = drive
         self.gyro  = gyro
@@ -16,3 +16,6 @@ class DriveTrain(object):
         turning = (average - self.gyro.getAngle()) * self.Kp
 
         self.drive.drive(average, turning)
+
+    def set(self, power, turning):
+        self.drive.drive(power, turning)

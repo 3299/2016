@@ -2,23 +2,24 @@
 Main logic code
 """
 import wpilib
-from components import Component
-from vision import Vision
-from limit import Limit
-from trigger import trigger
-from drive import DriveTrain
+from inits import Component
+from components.vision import Vision
+
+from components.chassis import Chassis
+from components.belt import Belt
+from components.beltAxis import BeltAxis
+from components.shooter import Shooter
 
 class MyRobot(wpilib.SampleRobot):
     def robotInit(self):
         self.C = Component() # Components inits all connected motors, sensors, and joysticks. See components.py.
         self.vision = Vision()
 
-        # Setup motors
-        self.drive = DriveTrain(self.C.driveTrain, self.C.gyroS)
-        self.belt = trigger(self.C.rightJ.getRawButton(2), self.C.beltM)
-        self.beltAxisLimit = Limit(self.C.rightJ.getRawButton(3), self.C.beltAxisM, self.C.beltAxisBS.get(), self.C.beltAxisTS.get())
-        self.flip = Limit(self.C.rightJ.getRawButton(4), self.C.flipM, self.C.flipS.get(), self.C.flipS.get())
-        self.shoot = trigger(self.C.rightJ.getTrigger(), self.C.shootM)
+        # Setup subsystems
+        self.drive    = Chassis(self.C.driveTrain, self.C.gyroS)
+        self.belt     = Belt(self.C.beltM)
+        self.beltAxis = BeltAxis(self.C.beltAxisM)
+        self.shoot    = Shooter(self.C.flipM, self.C.shootM)
 
     def operatorControl(self):
         self.C.driveTrain.setSafetyEnabled(True) # keeps robot from going crazy if connection with DS is lost
@@ -27,12 +28,10 @@ class MyRobot(wpilib.SampleRobot):
             # Drive
             self.C.driveTrain.tankDrive(self.C.leftJ, self.C.middleJ)
 
-            # All the triggers for these are defined in robotInit
             self.drive.run(self.C.leftJ.getY(), self.C.middleJ.getY())
-            self.belt.run()
-            self.beltAxisLimit.run()
-            self.flip.run()
-            self.shoot.run()
+            self.belt.run(self.C.rightJ.getRawButton(2))
+            self.beltAxis.run(self.C.rightJ.getRawButton(3), self.C.beltAxisBS.get(), self.C.beltAxisTS.get())
+            self.shoot.run(self.C.rightJ.getRawButton(5), self.C.rightJ.getRawButton(1), self.C.flipS.get())
 
             wpilib.Timer.delay(0.005) # wait for a motor update time
 
