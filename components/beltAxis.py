@@ -21,4 +21,4 @@ class BeltAxis(object):
             self.output.set(self.direction)
 
     def set(self, value):
-        output.set(value)
+        self.output.set(value)

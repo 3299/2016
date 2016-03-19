@@ -10,20 +10,36 @@ class Shooter(object):
 
         self.shootOn = False
         self.flipOn  = False
+        self.triggerPulled = False
 
-    def run(self, shootV, flipV, stop1):
-        if (flipV == True and self.flipOn == False):
-            self.flipOn = True
-
-        if (shootV == True and self.shootOn == False):
-            self.shootOn = True
-
+    def run(self, on, off, shoot, stop1):
         if (self.shootOn == True):
             self.shootO.set(1)
+        else:
+            self.shootO.set(0)
+
+        if (self.triggerPulled == True and stop1 == False):
+            self.flipOn = True
 
         if (self.flipOn == True):
-            self.flipO.set(1)
+            self.flipO.set(0.25)
+        else:
+            self.flipO.set(0)
 
-        if (self.flipOn == True and stop1 == True):
+        if (stop1 == False):
+            self.flipOn = False
+
+
+        # Triggers
+        if (on == True):
+            self.shootOn = True
+        if (off == True):
             self.shootOn = False
-            self.flipOn  = False
+        """
+        if (stop1 == True):
+            self.flipOn = True
+            self.triggerPulled = False
+        """
+        if (shoot == True):
+            self.triggerPulled = True
+            self.flipOn = True

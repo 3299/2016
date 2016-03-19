@@ -26,12 +26,12 @@ class MyRobot(wpilib.SampleRobot):
 
         while self.isOperatorControl() and self.isEnabled():
             # Drive
-            self.C.driveTrain.tankDrive(self.C.leftJ, self.C.middleJ)
-
             self.drive.run(self.C.leftJ.getY(), self.C.middleJ.getY())
-            self.belt.run(self.C.rightJ.getRawButton(2))
-            self.beltAxis.run(self.C.rightJ.getRawButton(3), self.C.beltAxisBS.get(), self.C.beltAxisTS.get())
-            self.shoot.run(self.C.rightJ.getRawButton(5), self.C.rightJ.getRawButton(1), self.C.flipS.get())
+
+            self.belt.run(self.C.rightJ.getRawButton(4), self.C.rightJ.getRawButton(5))
+            #self.beltAxis.run(self.C.rightJ.getRawButton(3), self.C.beltAxisBS.get(), self.C.beltAxisTS.get())
+            self.beltAxis.set(self.C.rightJ.getY())
+            self.shoot.run(self.C.rightJ.getRawButton(2), self.C.rightJ.getRawButton(3), self.C.rightJ.getRawButton(1), self.C.flipS.get())
 
             wpilib.Timer.delay(0.005) # wait for a motor update time
 

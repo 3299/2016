@@ -13,7 +13,7 @@ class Component(object):
         # Init drivetrain
         self.driveTrain = wpilib.RobotDrive(Mapping.frontLeftM, Mapping.backLeftM, Mapping.frontRightM, Mapping.backRightM)
         self.driveTrain.setExpiration(0.1)
-
+        
         # Init other motors
         self.beltM      = wpilib.Jaguar(Mapping.beltM)
         # change to self.beltM = wpilib.Talon(Mapping.beltM) on comp bot
