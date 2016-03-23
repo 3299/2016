@@ -11,7 +11,7 @@ class Vision(object):
         # open socket
         try:
             self.sock = socket.socket()
-            self.sock.connect(("raspberrypi", 1182))
+            self.sock.connect(("10.32.99.73", 1182))
         except:
             return None
 
@@ -21,7 +21,23 @@ class Vision(object):
             self.sock.send(b'\r\n')
             data = self.sock.recv(256)
             data = data.decode("utf-8") # info comes back as a byte string
-            return data
-        except: # re-opens the socket then requests data again
+            data = data.strip() # remove any whitespace
+
+            if (data.find(",") == -1): # no data
+                print("Nothing")
+                return False
+            else:
+                data = data.split(',')
+
+                i = 0
+                for a in data:
+                    if (i == 3):
+                        a = a.replace(':','')
+
+                    data[i] = float(a)
+                    i = i + 1
+
+                return data
+
+        except: # re-opens the socket
             self.__init__()
-            return self.getData()
