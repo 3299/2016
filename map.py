@@ -16,10 +16,11 @@ class Map(object):
         self.backRightM  = 0
 
         self.beltM       = 7
-        self.beltAxisM   = 5
+        self.beltAxisM   = 2
         self.shootM      = 6
         self.flipM       = 4
-        self.liftM       = 1
+        self.lift1M      = 1
+        self.lift2M      = 5
 
         # lift and shoot are switched
 

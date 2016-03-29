@@ -24,7 +24,6 @@ class Vision(object):
             data = data.strip() # remove any whitespace
 
             if (data.find(",") == -1): # no data
-                print("Nothing")
                 return False
             else:
                 data = data.split(',')
@@ -41,3 +40,22 @@ class Vision(object):
 
         except: # re-opens the socket
             self.__init__()
+            return self.getData()
+
+    def getTurn(self):
+        dataV = self.getData()
+        if (dataV != False):
+            print(str(dataV[1]) + ", ratio: " + str(dataV[3]))
+
+            if (dataV[1] < 0):
+                scale = -2.5
+            else:
+                scale = 2.5
+
+            ratio = 1 - dataV[3] # optimally, the ratio would be 1, so we need to know how far away from 1 we are
+
+            turn = dataV[1] * ratio * scale
+
+            return turn
+        else:
+            return False

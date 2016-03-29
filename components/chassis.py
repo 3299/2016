@@ -10,13 +10,14 @@ class Chassis(object):
         self.Kp    = 0.03
 
     def run(self, leftP, rightP):
-        """
-        average = leftP + rightP
-        average = average / 2
+        """turning = leftP - rightP
+        turning = turning * 0.5
+        power = abs(leftP) + abs(rightP)
 
-        turning = (average - self.gyro.getAngle()) * self.Kp
+        turning = turning - (self.gyro.getAngle() * self.Kp)
 
-        self.drive.drive(average, turning)
+        self.drive.drive(power, turning)
+        #self.drive.tankDrive(leftP, rightP)
         """
         self.drive.tankDrive(leftP, rightP)
 

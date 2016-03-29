@@ -20,6 +20,7 @@ class Shooter(object):
 
         if (self.triggerPulled == True and stop1 == False):
             self.flipOn = True
+            self.shootOn = False
 
         if (self.flipOn == True):
             self.flipO.set(0.25)
