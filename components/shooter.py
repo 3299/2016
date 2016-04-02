@@ -12,7 +12,10 @@ class Shooter(object):
         self.flipOn  = False
         self.triggerPulled = False
 
-    def run(self, on, off, shoot, stop1):
+    def run(self, on, limit1, shoot, stop1):
+        if (limit1 == False):
+            self.shootOn = False
+
         if (self.shootOn == True):
             self.shootO.set(1)
         else:
@@ -32,15 +35,8 @@ class Shooter(object):
 
 
         # Triggers
-        if (on == True):
+        if (on == True and limit1 == True):
             self.shootOn = True
-        if (off == True):
-            self.shootOn = False
-        """
-        if (stop1 == True):
-            self.flipOn = True
-            self.triggerPulled = False
-        """
         if (shoot == True):
             self.triggerPulled = True
             self.flipOn = True

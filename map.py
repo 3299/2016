@@ -22,13 +22,13 @@ class Map(object):
         self.lift1M      = 1
         self.lift2M      = 5
 
-        # lift and shoot are switched
-
         # Sensors have suffix 'S'. Gyro and sonar use analog in, everything else uses the DIO.
         self.gyroS       = 0
-        self.sonarS      = 1
+        #self.sonarS      = 1
         self.beltAxisTS  = 0
         self.beltAxisBS  = 1
         self.flipS       = 2
+        self.sonicTrig   = 4
+        self.sonicEcho   = 3
 
         pass

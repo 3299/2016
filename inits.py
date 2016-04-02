@@ -31,7 +31,8 @@ class Component(object):
 
         # Init sensors
         self.gyroS      = wpilib.AnalogGyro(Mapping.gyroS)
-        self.sonarS     = wpilib.AnalogInput(Mapping.sonarS)
+        #self.sonarS     = wpilib.AnalogInput(Mapping.sonarS)
+        self.sonic      = wpilib.Ultrasonic(Mapping.sonicTrig, Mapping.sonicEcho)
         self.beltAxisTS = wpilib.DigitalInput(Mapping.beltAxisTS)
         self.beltAxisBS = wpilib.DigitalInput(Mapping.beltAxisBS)
         self.flipS      = wpilib.DigitalInput(Mapping.flipS)

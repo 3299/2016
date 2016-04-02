@@ -9,7 +9,7 @@ class Chassis(object):
 
         self.Kp    = 0.03
 
-    def run(self, leftP, rightP):
+    def run(self, on, leftP, rightP):
         """turning = leftP - rightP
         turning = turning * 0.5
         power = abs(leftP) + abs(rightP)
@@ -19,7 +19,8 @@ class Chassis(object):
         self.drive.drive(power, turning)
         #self.drive.tankDrive(leftP, rightP)
         """
-        self.drive.tankDrive(leftP, rightP)
+        if (on != True):
+            self.drive.tankDrive(leftP, rightP)
 
     def set(self, power, turning):
         self.drive.drive(power, turning)
