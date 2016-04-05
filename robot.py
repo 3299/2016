@@ -14,6 +14,8 @@ from components.belt import Belt
 from components.beltAxis import BeltAxis
 from components.shooter import Shooter
 from components.lift import Lift
+from components.sonic import Sonic
+from components.arduino import Arduino
 
 class MyRobot(wpilib.SampleRobot):
     def robotInit(self):
@@ -25,24 +27,33 @@ class MyRobot(wpilib.SampleRobot):
         self.beltAxis = BeltAxis(self.C.beltAxisM)
         self.shoot    = Shooter(self.C.flipM, self.C.shootM)
         self.lift     = Lift(self.C.lift1M, self.C.lift2M)
+        self.sonic    = Sonic(self.C.sonic)
+        self.arduino  = Arduino(self.C.arduino)
 
         self.sd = SmartDashboard
-
-        self.sd.putString("Hello", "World")
 
     def operatorControl(self):
         self.C.driveTrain.setSafetyEnabled(True) # keeps robot from going crazy if connection with DS is lost
 
         while self.isOperatorControl() and self.isEnabled():
+            distance = self.sonic.getFeet()
+            self.sd.putDouble('distance', distance)
+
+            """
+            if (3 < distance and distance < 8):
+                self.sd.putBoolean("Ready", True)
+                self.arduino.send("r")
+            else:
+                self.sd.putBoolean("Ready", False)
+                self.arduino.send("g")
+            """
+            if (self.C.middleJ.getRawButton(1) == True):
+                self.arduino.send("rt")
+
             # Drive
             self.drive.run(self.C.leftJ.getRawButton(1), self.C.leftJ.getY(), self.C.middleJ.getY())
 
-            distance = self.C.sonic.getRangeInches()
-            distance = distance / 12
-
-            #print(distance)
-            self.sd.putDouble('sonic', distance)
-
+            # Components
             self.belt.run(self.C.rightJ.getRawButton(4), self.C.rightJ.getRawButton(5))
             self.beltAxis.run(self.C.rightJ.getRawButton(3), self.C.rightJ.getY(), self.C.beltAxisTS.get(), self.C.beltAxisBS.get())
             self.lift.run(self.C.leftJ.getRawButton(1), self.C.leftJ.getY(), self.C.middleJ.getY())
