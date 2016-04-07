@@ -15,14 +15,12 @@ class Component(object):
         self.driveTrain.setExpiration(0.1)
 
         # Init other motors
-        self.beltM      = wpilib.Jaguar(Mapping.beltM)
-        # change to self.beltM = wpilib.Talon(Mapping.beltM) on comp bot
-        self.beltAxisM  = wpilib.Talon(Mapping.beltAxisM)
+        self.beltM      = wpilib.Talon(Mapping.beltM)
+        self.beltAxisM  = wpilib.Jaguar(Mapping.beltAxisM)
         self.shootM     = wpilib.Talon(Mapping.shootM)
         self.flipM      = wpilib.Jaguar(Mapping.flipM)
-        self.lift1M     = wpilib.Jaguar(Mapping.lift1M)
-        self.lift2M     = wpilib.Jaguar(Mapping.lift2M)
-        # change to liftM = wpilib.Talon(Mapping.liftM)
+        self.lift1M     = wpilib.Talon(Mapping.lift1M)
+        self.lift2M     = wpilib.Talon(Mapping.lift2M)
 
         # Init joysticks
         self.leftJ      = wpilib.Joystick(Mapping.leftJ)

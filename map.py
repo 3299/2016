@@ -27,7 +27,7 @@ class Map(object):
         #self.sonarS      = 1
         self.beltAxisTS  = 0
         self.beltAxisBS  = 1
-        self.flipS       = 2
+        self.flipS       = 5
         self.sonicTrig   = 4
         self.sonicEcho   = 3
 
