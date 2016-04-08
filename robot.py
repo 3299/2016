@@ -16,6 +16,7 @@ from components.shooter import Shooter
 from components.lift import Lift
 from components.sonic import Sonic
 from components.arduino import Arduino
+from guide import Guiding
 
 class MyRobot(wpilib.SampleRobot):
     def robotInit(self):
@@ -30,25 +31,28 @@ class MyRobot(wpilib.SampleRobot):
         self.sonic    = Sonic(self.C.sonic)
         self.arduino  = Arduino(self.C.arduino)
 
+        self.guide    = Guiding(self.sonic, self.drive)
+
         self.sd = SmartDashboard
+        self.sd.putBoolean("autoMove", False)
+
+        self.autoLoop = 0
 
     def operatorControl(self):
         self.C.driveTrain.setSafetyEnabled(True) # keeps robot from going crazy if connection with DS is lost
 
         while self.isOperatorControl() and self.isEnabled():
-            distance = self.sonic.getFeet()
+            distance = self.sonic.getAverage()
+            print(distance)
             self.sd.putDouble('distance', distance)
 
-            """
-            if (3 < distance and distance < 8):
+            if (5.25 < distance and distance < 5.75):
                 self.sd.putBoolean("Ready", True)
-                self.arduino.send("r")
             else:
                 self.sd.putBoolean("Ready", False)
-                self.arduino.send("g")
-            """
+
             if (self.C.middleJ.getRawButton(1) == True):
-                self.arduino.send("rt")
+                self.guide.guideSonic()
 
             # Drive
             self.drive.run(self.C.leftJ.getRawButton(1), self.C.leftJ.getY(), self.C.middleJ.getY())
@@ -63,7 +67,14 @@ class MyRobot(wpilib.SampleRobot):
 
     def autonomous(self):
         """This function is called periodically during autonomous."""
-        pass
+        if (self.sd.getBoolean("autoMove") == True):
+            distance = self.sonic.getAverage()
+
+            while (self.autoLoop < 2000 and distance > 5):
+                self.drive.set(-1, 0)
+                wpilib.Timer.delay(0.005)
+                self.autoLoop = self.autoLoop + 1
+
 
     def test(self):
         """This function is called periodically during test mode."""
