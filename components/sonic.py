@@ -14,7 +14,7 @@ class Sonic(object):
         distance = self.sensor.getRangeInches()
         distance = distance / 12
 
-        distance = distance + 0.52 # account for the fact that the sensor is not on front of robot
+        distance = distance + 1.91 # account for the fact that the sensor is not on front of robot
 
         return distance
 
